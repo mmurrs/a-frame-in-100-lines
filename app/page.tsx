@@ -8,6 +8,9 @@ const frameMetadata = getFrameMetadata({
     {
       label: 'Click Me',
     },
+    {
+      label: 'Dont click me',
+    }
   ],
   image: `https://spotify-gallery-00.vercel.app/waves_mid.png`,
   post_url: `https://spotify-gallery-00.vercel.app/api/frame`,
