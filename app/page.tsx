@@ -1,5 +1,6 @@
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import type { Metadata } from 'next';
+import React, { useEffect, useState } from 'react';
 
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 
@@ -30,8 +31,20 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/api/frame/route');
+      const result = await response.json();
+      setData(result);
+    }
+
+    fetchData();
+  }, []);
   return (
     <>
+      {data ? <p>Testing</p> : <p>Loading....</p>}
       <h1>mane to main</h1>
     </>
   );

@@ -20,11 +20,17 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // LLM interactions
 
   // TODO: How to check the label
-  console.log("Frame response: ", message)
-  console.log("Frame Message Raw: ", message?.raw)
+  // console.log("Frame response: ", message)
+  // console.log("Frame Message Raw: ", message?.raw)
+
+  // Thought: Check to see the button that is clicked
+  // TODO: See the fid of the person voting
+  // TODO: Some way to store the responses?
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
     button_2 = message.following as any;
+    button_3 = body.untrustedData as any;
+    button_4 = body.trustedData as any;
   }
 
   return new NextResponse(
@@ -35,6 +41,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         },
         {
           label: `${button_2}`,
+        },
+        {
+          label: `${button_3}`,
+        },
+        {
+          label: `${button_4}`,
         }
       ],
       image: `https://spotify-gallery-00.vercel.app/ying_yang_mid.png`,
