@@ -18,6 +18,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Searching farcaster in there would be kinda funny
   // you can now do dynamic searches
   // LLM interactions
+
+  // TODO: How to check the label
+  console.log("Frame response: ", message)
+  console.log("Frame Message Raw: ", message?.raw)
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
     button_2 = message.following as any;
