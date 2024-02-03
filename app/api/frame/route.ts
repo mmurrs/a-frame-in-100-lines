@@ -9,9 +9,23 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   let button_3: string | undefined = '';
   let button_4: string | undefined = '';
 
-  const body: FrameRequest = await req.json();
-  const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
-
+  
+  try {
+    const body: FrameRequest = await req.json();
+    const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });
+    // Thought: Check to see the button that is clicked
+    // TODO: See the fid of the person voting
+    // TODO: Some way to store the responses?
+    if (isValid) {
+      accountAddress = message.interactor.verified_accounts[0];
+      button_2 = message.following as any;
+      button_3 = body.untrustedData.buttonIndex as any;
+      button_4 = body.trustedData.messageBytes as any;
+  }
+  } catch(err) {
+    console.error(err);
+    // Some response to try again
+  }
   // TODO: Use Neynar or Airstack to query and get closely related farcasters
   // Maybe who are your top 5 friends 
   // top channels you interact with
@@ -23,15 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // console.log("Frame response: ", message)
   // console.log("Frame Message Raw: ", message?.raw)
 
-  // Thought: Check to see the button that is clicked
-  // TODO: See the fid of the person voting
-  // TODO: Some way to store the responses?
-  if (isValid) {
-    accountAddress = message.interactor.verified_accounts[0];
-    button_2 = message.following as any;
-    button_3 = body.untrustedData.buttonIndex as any;
-    button_4 = body.trustedData.messageBytes as any;
-  }
+
 
   return new NextResponse(
     getFrameHtmlResponse({
