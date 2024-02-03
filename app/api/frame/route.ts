@@ -29,8 +29,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
     button_2 = message.following as any;
-    button_3 = body.untrustedData as any;
-    button_4 = body.trustedData as any;
+    button_3 = body.untrustedData.buttonIndex as any;
+    button_4 = body.trustedData.messageBytes as any;
   }
 
   return new NextResponse(
