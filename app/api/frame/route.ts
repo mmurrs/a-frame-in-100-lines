@@ -21,6 +21,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       button_2 = message.following as any;
       button_3 = body.untrustedData.buttonIndex as any;
       button_4 = body.trustedData.messageBytes as any;
+      const decodedMessage = await process.env.HUB_URL + '/validateMessage';
+      button_4 = decodedMessage
   }
   } catch(err) {
     console.error(err);
