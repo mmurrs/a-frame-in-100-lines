@@ -1,21 +1,9 @@
-import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/onchainkit';
+import { FrameRequest, getFrameMessage as getMessage, getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
-import { Frame, validateFrameMessage, FrameActionPayload } from "frames.js"
+import { Frame, validateFrameMessage, FrameActionPayload, getFrameMessage } from "frames.js"
 
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
-// Creates a client to interact with from the HUB_URL 
-let newFrame: Frame = {
-  version: "vNext",
-  postUrl: "",
-  image: "",
-  buttons: [
-    { label: "Button 1", action: "post" },
-    { label: "Button 2", action: "post"}
-  ],
-  ogImage: "https://spotify-gallery-00.vercel.app/ying_yang_mid.png",
-  inputText: "Bob" 
-}
 
 const client = process.env.HUB_URL ? getSSLHubRpcClient(process.env.HUB_URL) : undefined;
 
@@ -28,7 +16,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // const body: FrameRequest = await req.json();
     const body: FrameActionPayload = await req.json();
-    const { isValid, message } = await getFrameMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });    // Thought: Check to see the button that is clicked
+
+
+    // Get trusted Data
+    const frameMessage = await getFrameMessage(body);
+    const { isValid, message } = await getMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });    // Thought: Check to see the button that is clicked
     
     console.log("Body: ", body);
     // TODO: See the fid of the person voting
@@ -38,7 +30,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       button_2 = message.following as any;
       button_3 = body.untrustedData.buttonIndex as any;
       button_4 = body.trustedData.messageBytes as any;
-      const decodedMessage = body.trustedData.messageBytes as any;
+
+      // Get the trusted data from frames
+      const decodedMessage = await getFrameMessage(body) as any;
       button_4 = decodedMessage
     } // if
       // Should do something if page 1
@@ -88,11 +82,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   );
 }
 
-export async function messageCheck(message) {
-  try {
-    const response = await fetch(`${process.env.HUB_URL}`)
-  }
-}
 export async function POST(req: NextRequest): Promise<Response> {
   return getResponse(req);
 }
