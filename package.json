@@ -13,6 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "@coinbase/onchainkit": "0.4.1",
+    "@farcaster/hub-nodejs": "^0.10.23",
     "api": "^6.1.1",
     "dotenv": "^16.4.1",
     "next": "^13.5.6",
