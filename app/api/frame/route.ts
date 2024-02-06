@@ -1,7 +1,7 @@
 import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
-import { Frame, validateFrameMessage, FrameActionPayload } from "frames.js"
+import { Frame, validateFrameMessage, FrameActionPayload, frameMessage } from "frames.js"
 
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 // Creates a client to interact with from the HUB_URL 
@@ -38,7 +38,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       button_2 = message.following as any;
       button_3 = body.untrustedData.buttonIndex as any;
       button_4 = body.trustedData.messageBytes as any;
-      const decodedMessage = await process.env.HUB_URL + '/validateMessage';
+      const decodedMessage = body.trustedData.messageBytes as any;
       button_4 = decodedMessage
     } // if
       // Should do something if page 1

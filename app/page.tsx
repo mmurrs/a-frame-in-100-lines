@@ -6,11 +6,8 @@ const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Option 1',
+      label: 'Get Started',
     },
-    {
-      label: 'Option 2',
-    }
   ],
   image: `https://spotify-gallery-00.vercel.app/waves_mid.png`,
   post_url: `https://spotify-gallery-00.vercel.app/api/frame`,
