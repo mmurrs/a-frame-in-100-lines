@@ -16,8 +16,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   try {
     // const body: FrameRequest = await req.json();
     const body: FrameActionPayload = await req.json();
-
-
     // Get trusted Data
     const frameMessage = await getFrameMessage(body);
     const { isValid, message } = await getMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });    // Thought: Check to see the button that is clicked
@@ -30,7 +28,6 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       button_2 = message.following as any;
       button_3 = body.untrustedData.buttonIndex as any;
       button_4 = body.trustedData.messageBytes as any;
-
       // Get the trusted data from frames
       const decodedMessage = await getFrameMessage(body) as any;
       button_4 = decodedMessage
@@ -59,6 +56,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // console.log("Frame Message Raw: ", message?.raw)
 
 
+
+  // Can I get a spotify song to display in the frame?
 
   return new NextResponse(
     getFrameHtmlResponse({
