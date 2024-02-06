@@ -1,7 +1,7 @@
 import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
-import { Frame, validateFrameMessage, FrameActionPayload, frameMessage } from "frames.js"
+import { Frame, validateFrameMessage, FrameActionPayload } from "frames.js"
 
 const NEXT_PUBLIC_URL = 'https://zizzamia.xyz';
 // Creates a client to interact with from the HUB_URL 
