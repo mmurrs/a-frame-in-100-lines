@@ -1,6 +1,10 @@
 import { getFrameMetadata } from '@coinbase/onchainkit';
 import type { Metadata } from 'next';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> basic
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
@@ -23,6 +27,8 @@ export const metadata: Metadata = {
     ...frameMetadata,
   },
 };
+
+
 
 export default function Page() {
   return (

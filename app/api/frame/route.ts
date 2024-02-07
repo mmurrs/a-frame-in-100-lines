@@ -3,8 +3,75 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
 import { Frame, validateFrameMessage, FrameActionPayload, getFrameMessage } from "frames.js"
 
+interface TrackInfo {
+  trackName: string;
+  artist: string;
+  imageUrl: string;
+  playlink: string;
+}
+var token = "";
+async function authenticateSpotify() {
+  const url = 'https://accounts.spotify.com/api/token';
+  const headers = {
+    'Authorization': 'Basic ' + btoa(process.env.client_id + ':' + process.env.client_secret),
+    'Content-Type': 'application/x-www-form-urlencoded'
+  };
 
-const client = process.env.HUB_URL ? getSSLHubRpcClient(process.env.HUB_URL) : undefined;
+  const body = new URLSearchParams();
+  body.append('grant_type', 'client_credentials');
+
+  fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: body,
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    token = data.access_token;
+    console.log(token);
+  })
+  .catch(error => console.error('Error:', error));
+}
+
+function extractSongInfo(res: any): TrackInfo {
+  const track = res.tracks[0];
+  const imageURL = track.album.images[0].url;
+
+  const trackInfo: TrackInfo = {
+    trackName: track.name,
+    artist: track.artists[0].name,
+    imageUrl: imageURL,
+    playlink: track.external_urls.spotify,
+  };
+
+  return trackInfo;
+}
+
+// Returns a recommended Spotify song
+async function getRecommendedSong(){
+  const url = `https://api.spotify.com/v1/recommendations?limit=1`;
+  try {
+    const spotifyResponse = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log(spotifyResponse);
+    return extractSongInfo(spotifyResponse);
+  } catch(error) {
+    console.error("Spotify Recommendation Error", error);
+  }
+}
+
+// TOOD
+// Authenticate for API token
+// Get tracks: house, deep-house, progressive-house, chicago-house
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   let accountAddress: string | undefined = '';
@@ -49,29 +116,21 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Searching farcaster in there would be kinda funny
   // you can now do dynamic searches
   // LLM interactions
-
-  // TODO: How to check the label
-  // console.log("Frame response: ", message)
-  // console.log("Frame Message Raw: ", message?.raw)
-
-
-
-  // Can I get a spotify song to display in the frame?
-
+  // if (isValid) {
+  //   accountAddress = message.interactor.verified_accounts[0];
+  //   button_2 = message.following as any;
+    
+  // }
+  authenticateSpotify();
+  let res: TrackInfo = await getRecommendedSong() as TrackInfo;
   return new NextResponse(
     getFrameHtmlResponse({
       buttons: [
         {
-          label: `🌲 ${accountAddress} 🌲`,
+          label: `🌲 ${res.trackName} 🌲`,
         },
         {
-          label: `${button_2}`,
-        },
-        {
-          label: `${button_3}`,
-        },
-        {
-          label: `${button_4}`,
+          label: `${res.trackName}`,
         }
       ],
       image: `${process.env.BASE_URL}/ying_yang_mid.png`,
