@@ -10,34 +10,34 @@ interface TrackInfo {
   playlink: string;
 }
 var token = "";
-async function authenticateSpotify() {
-  const url = 'https://accounts.spotify.com/api/token';
-  const headers = {
-    'Authorization': 'Basic ' + btoa(process.env.client_id + ':' + process.env.client_secret),
-    'Content-Type': 'application/x-www-form-urlencoded'
-  };
+// async function authenticateSpotify() {
+//   const url = 'https://accounts.spotify.com/api/token';
+//   const headers = {
+//     'Authorization': 'Basic ' + btoa(process.env.client_id + ':' + process.env.client_secret),
+//     'Content-Type': 'application/x-www-form-urlencoded'
+//   };
 
-  const body = new URLSearchParams();
-  body.append('grant_type', 'client_credentials');
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: body,
-    });
+//   const body = new URLSearchParams();
+//   body.append('grant_type', 'client_credentials');
+//   try {
+//     const response = await fetch(url, {
+//       method: 'POST',
+//       headers: headers,
+//       body: body,
+//     });
 
-    if(!response.ok) {
-      throw new Error(`Error in Auth response: ${response.statusText}`);
-    }
+//     if(!response.ok) {
+//       throw new Error(`Error in Auth response: ${response.statusText}`);
+//     }
 
-    const data = await response.json();
-    token = data.access_token;
-    console.log("Token", token);
-    console.log("Toklen expires in: data.expires_in");
-    } catch(error) {
-      console.error('Error ', error);
-    }
-}
+//     const data = await response.json();
+//     token = data.access_token;
+//     console.log("Token", token);
+//     console.log("Toklen expires in: data.expires_in");
+//     } catch(error) {
+//       console.error('Error ', error);
+//     }
+// }
 
 function extractSongInfo(res: any): TrackInfo {
   const track = res.tracks[0];
@@ -58,6 +58,7 @@ async function getRecommendedSong() {
   const url = `https://api.spotify.com/v1/recommendations?limit=1&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
 
   try {
+    console.log("Token: ", process.env.SPOTIFY_TOKEN)
     const spotifyResponse = await fetch(url, {
       method: 'GET',
       headers: {
@@ -95,7 +96,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         },
       ],
       image: res.imageUrl,
-      post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
+      post_url: `https://spotify-gallery-00.vercel.app/api/frame`,
     }),
   );
 }
