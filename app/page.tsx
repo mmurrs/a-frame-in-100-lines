@@ -7,8 +7,8 @@ const frameMetadata = getFrameMetadata({
       label: 'Get Started',
     },
   ],
-  image: `${process.env.NEXT_PUBLIC_URL}/ying_yang_mid.png`,
-  post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
+  image: `ying_yang_mid.png`,
+  post_url: `/api/frame`,
 });
 
 export const metadata: Metadata = {
