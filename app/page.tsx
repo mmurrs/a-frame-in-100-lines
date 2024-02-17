@@ -4,11 +4,11 @@ import type { Metadata } from 'next';
 const frameMetadata = getFrameMetadata({
   buttons: [
     {
-      label: 'Get Started',
+      label: 'Start the groove',
     },
   ],
-  image: `https://spotify-gallery-00.vercel.app/ying_yang_mid.png`,
-  post_url: `https://spotify-gallery-00.vercel.app/api/frame`,
+  image: `${process.env.NEXT_PUBLIC_URL}/ying_yang_mid.png`,
+  post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
 });
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'mane to main',
     description: 'LFG',
-    images: [`https://spotify-gallery-00.vercel.app/ying_yang_mid.png`],
+    images: [`${process.env.NEXT_PUBLIC_URL}/ying_yang_mid.png`],
   },
   other: {
     ...frameMetadata,
