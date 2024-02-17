@@ -46,10 +46,10 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
-"@coinbase/onchainkit@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.npmjs.org/@coinbase/onchainkit/-/onchainkit-0.4.1.tgz"
-  integrity sha512-bXaIw8qyk8+9jLizF5clv9pb5u8p5rLAK/z09+Z0ZsHUHr3AS6Akhnp9VF0uQXWRDhFohbA/8ZCOcMKdt/Ad3g==
+"@coinbase/onchainkit@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.npmjs.org/@coinbase/onchainkit/-/onchainkit-0.5.2.tgz"
+  integrity sha512-YY7Fi3ar2abgZQVXuNX9+l56n2Vqm93ZyKnHJuaJqFKQpjwRY9+a7kx8xh8tPrRWFH3Kj1chYmeJQ0rrfEVKeQ==
 
 "@esbuild/darwin-arm64@0.19.12":
   version "0.19.12"
@@ -165,12 +165,12 @@
   resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-14.1.0.tgz"
   integrity sha512-nUDn7TOGcIeyQni6lZHfzNoo9S0euXnu0jhsbMOmMJUBfgsnESdjN97kM7cBqQxZa8L/bM9om/S5/1dzCrW6wQ==
 
-"@noble/curves@^1.0.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@noble/curves/-/curves-1.3.0.tgz"
-  integrity sha512-t01iSXPuN+Eqzb4eBX0S5oubSqXbK/xXa1Ne18Hj8f9pStxztHCE2gfboSp/dZRLSqfuLpRK2nDXDK+W9puocA==
+"@noble/curves@^1.0.0", "@noble/curves@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@noble/curves/-/curves-1.2.0.tgz"
+  integrity sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==
   dependencies:
-    "@noble/hashes" "1.3.3"
+    "@noble/hashes" "1.3.2"
 
 "@noble/curves@~1.2.0":
   version "1.2.0"
@@ -179,14 +179,7 @@
   dependencies:
     "@noble/hashes" "1.3.2"
 
-"@noble/curves@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@noble/curves/-/curves-1.2.0.tgz"
-  integrity sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==
-  dependencies:
-    "@noble/hashes" "1.3.2"
-
-"@noble/hashes@^1.3.0", "@noble/hashes@~1.3.0", "@noble/hashes@1.3.3":
+"@noble/hashes@^1.3.0", "@noble/hashes@~1.3.0":
   version "1.3.3"
   resolved "https://registry.npmjs.org/@noble/hashes/-/hashes-1.3.3.tgz"
   integrity sha512-V7/fPHgl+jsVPXqqeOzT8egNj2iBIVt+ECeMMG8TdcnTikP3oaBtUVqpT/gYCR68aEBJSF+XbYUxStjbFMqIIA==
@@ -2610,7 +2603,7 @@ viem@^1.12.2:
     isows "1.0.3"
     ws "8.13.0"
 
-viem@^2.7.1:
+viem@^2.7.0, viem@^2.7.1:
   version "2.7.6"
   resolved "https://registry.npmjs.org/viem/-/viem-2.7.6.tgz"
   integrity sha512-43TF0VYcTeNef9dax1/BhqlRLXpAo6HAiQ68hrJ8XRhDOou73nHZEjeFl8Eai4UFFodKhu+PbRUFzuuoixOUfg==

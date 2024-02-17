@@ -19,23 +19,24 @@ async function authenticateSpotify() {
 
   const body = new URLSearchParams();
   body.append('grant_type', 'client_credentials');
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: body,
+    });
 
-  fetch(url, {
-    method: 'POST',
-    headers: headers,
-    body: body,
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if(!response.ok) {
+      throw new Error(`Error in Auth response: ${response.statusText}`);
     }
-    return response.json();
-  })
-  .then(data => {
+
+    const data = await response.json();
     token = data.access_token;
-    console.log(token);
-  })
-  .catch(error => console.error('Error:', error));
+    console.log("Token", token);
+    console.log("Toklen expires in: data.expires_in");
+    } catch(error) {
+      console.error('Error ', error);
+    }
 }
 
 function extractSongInfo(res: any): TrackInfo {
@@ -53,19 +54,25 @@ function extractSongInfo(res: any): TrackInfo {
 }
 
 // Returns a recommended Spotify song
-async function getRecommendedSong(){
-  const url = `https://api.spotify.com/v1/recommendations?limit=1`;
+async function getRecommendedSong() {
+  const url = `https://api.spotify.com/v1/recommendations?limit=1&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
+
   try {
     const spotifyResponse = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${process.env.SPOTIFY_TOKEN}` // Ensure this is the actual token
       }
     });
-    console.log(spotifyResponse);
-    return extractSongInfo(spotifyResponse);
-  } catch(error) {
-    console.error("Spotify Recommendation Error", error);
+
+    if (!spotifyResponse.ok) {
+      throw new Error(`Spotify API responded with status ${spotifyResponse.status}: ${spotifyResponse.statusText}`);
+    }
+
+    const data = await spotifyResponse.json(); // Parse JSON response
+    return extractSongInfo(data); // Assuming extractSongInfo is designed to work with the parsed JSON
+  } catch (error) {
+    console.error("Spotify Recommendation Error:", error);
   }
 }
 
@@ -74,67 +81,21 @@ async function getRecommendedSong(){
 // Get tracks: house, deep-house, progressive-house, chicago-house
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  let accountAddress: string | undefined = '';
-  let button_2: string | undefined = '';
-  let button_3: string | undefined = '';
-  let button_4: string | undefined = '';
-  
-  try {
-    // const body: FrameRequest = await req.json();
-    const body: FrameActionPayload = await req.json();
-    // Get trusted Data
-    const frameMessage = await getFrameMessage(body);
-    const { isValid, message } = await getMessage(body, { neynarApiKey: 'NEYNAR_ONCHAIN_KIT' });    // Thought: Check to see the button that is clicked
-    
-    console.log("Body: ", body);
-    // TODO: See the fid of the person voting
-    // TODO: Some way to store the responses?
-    if (isValid) {
-      accountAddress = message.interactor.verified_accounts[0];
-      button_2 = message.following as any;
-      button_3 = body.untrustedData.buttonIndex as any;
-      button_4 = body.trustedData.messageBytes as any;
-      // Get the trusted data from frames
-      const decodedMessage = await getFrameMessage(body) as any;
-      button_4 = decodedMessage
-    } // if
-      // Should do something if page 1
-      if(body.untrustedData.buttonIndex as number == 1){
-        console.log("button 1 pressed");
-      } else if (body.untrustedData.buttonIndex as number == 2){
-        console.log("button 2 pressed");
-      }
-    } catch(err) {
-      console.error(err);
-      // Some response to try again
-    }
-
-    
-  // TODO: Use Neynar or Airstack to query and get closely related farcasters
-  // Maybe who are your top 5 friends 
-  // top channels you interact with
-  // Searching farcaster in there would be kinda funny
-  // you can now do dynamic searches
-  // LLM interactions
-  // if (isValid) {
-  //   accountAddress = message.interactor.verified_accounts[0];
-  //   button_2 = message.following as any;
-    
-  // }
-  authenticateSpotify();
+  // Should only request once an hour
+  // authenticateSpotify();
   let res: TrackInfo = await getRecommendedSong() as TrackInfo;
+  console.log("Res object: ", res)
   return new NextResponse(
     getFrameHtmlResponse({
       buttons: [
         {
-          label: `🌲 ${res.trackName} 🌲`,
+          action: 'link',
+          label: 'Play on Spotify',
+          target: res.playlink,
         },
-        {
-          label: `${res.trackName}`,
-        }
       ],
-      image: `${process.env.BASE_URL}/ying_yang_mid.png`,
-      post_url: `${process.env.BASE_URL}/api/frame`,
+      image: res.imageUrl,
+      post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
     }),
   );
 }
