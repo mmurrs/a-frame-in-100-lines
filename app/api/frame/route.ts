@@ -67,7 +67,7 @@ async function getRecommendedSong(): Promise<TrackInfo[]> {
 // Get tracks: house, deep-house, progressive-house, chicago-house
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   counter++;
-
+  process.env.TEST = counter as any;
 
   let res: TrackInfo[] = await getRecommendedSong() as TrackInfo[];
   // Should only request once an hour
