@@ -66,9 +66,9 @@ async function getRecommendedSong(): Promise<TrackInfo[]> {
 // Authenticate for API token
 // Get tracks: house, deep-house, progressive-house, chicago-house
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  ++counter;
+  counter++;
 
-  
+
   let res: TrackInfo[] = await getRecommendedSong() as TrackInfo[];
   // Should only request once an hour
   // authenticateSpotify();
