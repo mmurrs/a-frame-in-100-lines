@@ -40,7 +40,7 @@ function extractSongInfo(res: any): TrackInfo[] {
 
 // Returns a recommended Spotify song
 async function getRecommendedSong(): Promise<TrackInfo[]> {
-  const url = `https://api.spotify.com/v1/recommendations?limit=10&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
+  const url = `https://api.spotify.com/v1/recommendations?limit=100&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
 
   try {
     const spotifyResponse = await fetch(url, {
@@ -79,14 +79,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'Play on Spotify',
-          target: res[counter % 10].playlink,
+          target: res[counter % 100].playlink,
         },
         {
           action: 'post',
           label: 'Spin the Record'
         }
       ],
-      image: res[counter % 10].imageUrl,
+      image: res[counter % 100].imageUrl,
       post_url: `${process.env.NEXT_PUBLIC_URL}api/frame`,
     }),
   );
