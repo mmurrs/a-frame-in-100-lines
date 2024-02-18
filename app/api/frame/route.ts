@@ -26,7 +26,7 @@ function extractSongInfo(res: any): TrackInfo {
 
 // Returns a recommended Spotify song
 async function getRecommendedSong() {
-  const url = `https://api.spotify.com/v1/recommendations?limit=1&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=70`;
+  const url = `https://api.spotify.com/v1/recommendations?limit=1&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
 
   try {
     const spotifyResponse = await fetch(url, {
