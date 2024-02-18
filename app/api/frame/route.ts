@@ -10,23 +10,33 @@ interface TrackInfo {
   playlink: string;
 }
 var token = "";
-function extractSongInfo(res: any): TrackInfo {
-  const track = res.tracks[0];
-  const imageURL = track.album.images[0].url;
+function extractSongInfo(res: any): TrackInfo[] {
+  // const track = res.tracks[0];
+  // const imageURL = track.album.images[0].url;
 
-  const trackInfo: TrackInfo = {
-    trackName: track.name,
-    artist: track.artists[0].name,
-    imageUrl: imageURL,
-    playlink: track.external_urls.spotify,
-  };
 
-  return trackInfo;
+  // const trackInfo: TrackInfo = {
+  //   trackName: track.name,
+  //   artist: track.artists[0].name,
+  //   imageUrl: imageURL,
+  //   playlink: track.external_urls.spotify,
+  // };
+
+  // return trackInfo;
+  return res.tracks.map((track: any) => {
+    const imageURL = track.album.images[0].url;
+    return {
+      trackName: track.name,
+      artist: track.artists[0].name,
+      imageUrl: imageURL,
+      playlink: track.external_urls.spotify,
+    };
+  });
 }
 
 // Returns a recommended Spotify song
-async function getRecommendedSong() {
-  const url = `https://api.spotify.com/v1/recommendations?limit=1&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
+async function getRecommendedSong(): Promise<TrackInfo[]> {
+  const url = `https://api.spotify.com/v1/recommendations?limit=10&seed_genres=house,progressive-house,deep-house,chicago-house&target_popularity=75`;
 
   try {
     const spotifyResponse = await fetch(url, {
@@ -44,8 +54,11 @@ async function getRecommendedSong() {
     return extractSongInfo(data); // Assuming extractSongInfo is designed to work with the parsed JSON
   } catch (error) {
     console.error("Spotify Recommendation Error:", error);
+    return [];
   }
 }
+
+var i = 0;
 
 // TOOD
 // Authenticate for API token
@@ -53,7 +66,7 @@ async function getRecommendedSong() {
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   // Should only request once an hour
   // authenticateSpotify();
-  let res: TrackInfo = await getRecommendedSong() as TrackInfo;
+  let res: TrackInfo[] = await getRecommendedSong() as TrackInfo[];
   console.log("Res object: ", res)
   return new NextResponse(
     getFrameHtmlResponse({
@@ -61,14 +74,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'Play on Spotify',
-          target: res.playlink,
+          target: res[0].playlink,
         },
         {
           action: 'post',
           label: 'Spin the Record'
         }
       ],
-      image: res.imageUrl,
+      image: res[0].imageUrl,
       post_url: `${process.env.NEXT_PUBLIC_URL}api/frame`,
     }),
   );
