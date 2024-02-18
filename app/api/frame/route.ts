@@ -69,7 +69,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }
       ],
       image: res.imageUrl,
-      post_url: `${process.env}/api/frame`,
+      post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
     }),
   );
 }
