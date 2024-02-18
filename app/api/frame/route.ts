@@ -63,6 +63,10 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
           label: 'Play on Spotify',
           target: res.playlink,
         },
+        {
+          action: 'post',
+          label: 'Spin the Record'
+        }
       ],
       image: res.imageUrl,
       post_url: `${process.env}/api/frame`,

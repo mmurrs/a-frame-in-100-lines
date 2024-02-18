@@ -1,8 +1,9 @@
 // export const dynamic = 'force-dynamic'; // static by default, unless reading the request
  
-// export function GET(request: Request) {
-//   return new Response(`Hello from ${process.env.VERCEL_REGION}`);
-// }
+export function GET(request: Request) {
+    process.env.TEST = "nope"
+  return new Response(`Hello from ${process.env.TEST}`);
+}
 
 // // async function authenticateSpotify() {
 // //   const url = 'https://accounts.spotify.com/api/token';
