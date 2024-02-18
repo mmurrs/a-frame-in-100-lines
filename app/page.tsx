@@ -7,8 +7,8 @@ const frameMetadata = getFrameMetadata({
       label: 'Start the groove',
     },
   ],
-  image: `${process.env.NEXT_PUBLIC_URL}/ying_yang_mid.png`,
-  post_url: `${process.env.NEXT_PUBLIC_URL}/api/frame`,
+  image: `${process.env.NEXT_PUBLIC_URL}ying_yang_mid.png`,
+  post_url: `${process.env.NEXT_PUBLIC_URL}api/frame`,
 });
 
 export const metadata: Metadata = {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'mane to main',
     description: 'LFG',
-    images: [`${process.env.NEXT_PUBLIC_URL}/ying_yang_mid.png`],
+    images: [`${process.env.NEXT_PUBLIC_URL}ying_yang_mid.png`],
   },
   other: {
     ...frameMetadata,
