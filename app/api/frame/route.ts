@@ -9,6 +9,10 @@ interface TrackInfo {
   imageUrl: string;
   playlink: string;
 }
+
+// Globals
+let counter = 0;
+
 var token = "";
 function extractSongInfo(res: any): TrackInfo[] {
   // const track = res.tracks[0];
@@ -58,15 +62,16 @@ async function getRecommendedSong(): Promise<TrackInfo[]> {
   }
 }
 
-var i = 0;
-
 // TOOD
 // Authenticate for API token
 // Get tracks: house, deep-house, progressive-house, chicago-house
 async function getResponse(req: NextRequest): Promise<NextResponse> {
+  ++counter;
+
+  
+  let res: TrackInfo[] = await getRecommendedSong() as TrackInfo[];
   // Should only request once an hour
   // authenticateSpotify();
-  let res: TrackInfo[] = await getRecommendedSong() as TrackInfo[];
   console.log("Res object: ", res)
   return new NextResponse(
     getFrameHtmlResponse({
@@ -74,14 +79,14 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         {
           action: 'link',
           label: 'Play on Spotify',
-          target: res[0].playlink,
+          target: res[counter % 10].playlink,
         },
         {
           action: 'post',
           label: 'Spin the Record'
         }
       ],
-      image: res[0].imageUrl,
+      image: res[counter % 10].imageUrl,
       post_url: `${process.env.NEXT_PUBLIC_URL}api/frame`,
     }),
   );
