@@ -1,7 +1,6 @@
 import { FrameRequest, getFrameMessage as getMessage, getFrameHtmlResponse } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
-import { Frame, validateFrameMessage, FrameActionPayload, getFrameMessage } from "frames.js"
 interface TrackInfo {
   trackName: string;
   artist: string;
