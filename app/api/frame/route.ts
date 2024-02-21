@@ -24,7 +24,7 @@ function extractSongInfo(res: any): TrackInfo[] {
 
   // return trackInfo;
   return res.tracks.map((track: any) => {
-    const imageURL = track.album.images[0].url;
+    const imageURL = track.album.images[track.album.images.length - 1].url;
     return {
       trackName: track.name,
       artist: track.artists[0].name,
@@ -35,9 +35,10 @@ function extractSongInfo(res: any): TrackInfo[] {
 }
 
 // Returns the desired formatted image using Sharp
-function imageFormatting(){
-  
-}
+// function imageFormatting(){
+//   //  Need to get the image to import 
+
+// }
 
 // Returns a recommended Spotify song
 async function getRecommendedSong(): Promise<TrackInfo[]> {
