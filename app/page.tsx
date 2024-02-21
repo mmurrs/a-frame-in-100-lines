@@ -7,7 +7,7 @@ const frameMetadata = getFrameMetadata({
       label: 'Start the groove',
     },
   ],
-  image: `${process.env.NEXT_PUBLIC_URL}dj_arch_1.png`,
+  image: `${process.env.NEXT_PUBLIC_URL}dj_arch.png`,
   post_url: `${process.env.NEXT_PUBLIC_URL}api/frame`,
 });
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Groove Provider',
     description: 'LFG',
-    images: [`${process.env.NEXT_PUBLIC_URL}dj_arch_1.png`],
+    images: [`${process.env.NEXT_PUBLIC_URL}dj_arch.png`],
   },
   other: {
     ...frameMetadata,
