@@ -2,7 +2,6 @@ import { FrameRequest, getFrameMessage as getMessage, getFrameHtmlResponse } fro
 import { NextRequest, NextResponse } from 'next/server';
 import { Message, getSSLHubRpcClient } from "@farcaster/hub-nodejs";
 import { Frame, validateFrameMessage, FrameActionPayload, getFrameMessage } from "frames.js"
-
 interface TrackInfo {
   trackName: string;
   artist: string;
@@ -11,9 +10,7 @@ interface TrackInfo {
 }
 
 // Globals
-let counter = 0;
-
-var token = "";
+let counter = Math.floor(Math.random() * 100);
 function extractSongInfo(res: any): TrackInfo[] {
   // const track = res.tracks[0];
   // const imageURL = track.album.images[0].url;
