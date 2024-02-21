@@ -34,9 +34,14 @@ function extractSongInfo(res: any): TrackInfo[] {
   });
 }
 
+// Returns the desired formatted image using Sharp
+function imageFormatting(){
+  
+}
+
 // Returns a recommended Spotify song
 async function getRecommendedSong(): Promise<TrackInfo[]> {
-  const url = `https://api.spotify.com/v1/recommendations?limit=100&seed_genres=house,progressive-house,deep-house,chicago-house`;
+  const url = `https://api.spotify.com/v1/recommendations?limit=100&seed_genres=house,progressive-house,deep-house,chicago-house&min_popularity=30`;
 
   try {
     const spotifyResponse = await fetch(url, {
