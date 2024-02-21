@@ -12,8 +12,8 @@ const frameMetadata = getFrameMetadata({
 });
 
 export const metadata: Metadata = {
-  title: 'Vibe Provider',
-  description: 'LFG',
+  title: 'Groove Provider',
+  description: 'Groove out to some house',
   openGraph: {
     title: 'Groove Provider',
     description: 'LFG',
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>Groove Provider</h1>
+      <h1>Groove Provider tm.</h1>
+      <h2>House music edition</h2>
     </>
   );
 }
