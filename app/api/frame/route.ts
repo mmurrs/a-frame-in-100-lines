@@ -24,7 +24,7 @@ function extractSongInfo(res: any): TrackInfo[] {
 
   // return trackInfo;
   return res.tracks.map((track: any) => {
-    const imageURL = track.album.images[2].url;
+    const imageURL = track.album.images[1].url;
     return {
       trackName: track.name,
       artist: track.artists[0].name,
