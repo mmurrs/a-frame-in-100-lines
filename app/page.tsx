@@ -13,7 +13,7 @@ const frameMetadata = getFrameMetadata({
 
 export const metadata: Metadata = {
   title: 'Groove Provider',
-  description: 'Groove out to some house',
+  description: 'Groove out to some house in frame',
   openGraph: {
     title: 'Groove Provider',
     description: 'LFG',
