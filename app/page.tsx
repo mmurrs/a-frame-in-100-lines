@@ -12,7 +12,7 @@ const frameMetadata = getFrameMetadata({
 });
 
 export const metadata: Metadata = {
-  title: 'Spotify Testing',
+  title: 'Vibe Provider',
   description: 'LFG',
   openGraph: {
     title: 'Groove Provider',
