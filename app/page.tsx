@@ -24,12 +24,10 @@ export const metadata: Metadata = {
   },
 };
 
-
-
 export default function Page() {
   return (
     <>
-      <h1>Groove Provider tm.</h1>
+      <h1>Groove Provider tm. </h1>
       <h2>House music edition</h2>
     </>
   );
