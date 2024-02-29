@@ -1,1 +1,1 @@
-# A Farcaster frame in next.js for music reocmmendations 
+# A Farcaster frame in next.js for music recommendations 
